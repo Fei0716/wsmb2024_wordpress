@@ -1,0 +1,55 @@
+/*
+    Template: blankslate
+    Theme Name: Online Games
+*/
+
+body {
+  background-color: rgb(39, 39, 88);
+  color: rgb(223, 223, 223);
+}
+a {
+  color: white;
+}
+
+/* page transitions style */
+#wrapper {
+  transition: opacity 0.5s;
+}
+.pjax-start {
+  opacity: 0;
+}
+.pjax-end {
+  opacity: 1;
+}
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+.loading-animation {
+  margin: 0 auto;
+  border: 2px solid white;
+  border-radius: 2rem;
+  border-top: 2px solid transparent;
+  height: 50px;
+  width: 50px;
+
+  animation: spin 0.5s linear infinite;
+}
+.loading-caption {
+  text-align: center;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
