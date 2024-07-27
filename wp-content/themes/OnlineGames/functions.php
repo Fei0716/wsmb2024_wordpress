@@ -11,9 +11,10 @@
                     background-image: url("'.get_stylesheet_directory_uri().'/images/login.jpg")!important; 
                     background-repeat: no-repeat;
                     background-size: cover;
+                    height: 100vh;
                 }
                 body::after{
-                    position: absolute;
+                    position: fixed !important;
                     content: "";
                     left: 0;
                     top: 0;
@@ -51,4 +52,30 @@
         wp_enqueue_script('pjax' , get_stylesheet_directory_uri().'/js/jquery-pjax-master/jquery.pjax.js' , array('jquery'));
         wp_enqueue_script('app.js' , get_stylesheet_directory_uri().'/js/app.js');
     });
+
+
+    //for password
+    function custom_enforce_password($errors){
+        $submittedPassword = isset($_POST['pass1']) ? $_POST['pass1'] : '';
+
+        //check for password length
+        if(strlen($submittedPassword) < 12){
+            $errors->add('password_too_short', '<strong>Error: </strong>password must be at least 12 digits');
+        }
+        //check for password strength
+        if(!preg_match('/^(?=.+[A-Za-z])(?=.+\d)(?=.+[^A-Za-z\d]).+$/' , $submittedPassword)){
+            $errors->add('password_too_weak', '<strong>Error: </strong>password must consist of numbers, letters, and special characters.');
+        }
+    }
+
+    add_filter('registration_errors' , 'custom_enforce_password');
+    add_filter('user_profile_update_errors' , 'custom_enforce_password');
+
+
+    //function for retrieving the page featured image's url
+    function get_the_page_thumbnail_url($id){
+        $thumbnailID = get_post_thumbnail_id($id);
+        $image_url = wp_get_attachment_image_src($thumbnailID , 'full');
+        return $image_url[0];
+    }
 ?>
